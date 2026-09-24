@@ -32,4 +32,7 @@ EXPOSE 8080
 
 COPY --from=build /app/publish .
 
-ENTRYPOINT ["dotnet", "InventoryPro.Api.dll"]
+# Render (and some other PaaS hosts) inject a PORT environment variable and
+# require the app to listen on it. Fall back to 8080 when PORT is not set.
+# The shell "exec" form preserves signal handling so the container stops cleanly.
+ENTRYPOINT ["/bin/sh", "-c", "ASPNETCORE_URLS=http://+:${PORT:-8080} exec dotnet InventoryPro.Api.dll"]

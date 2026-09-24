@@ -4,6 +4,7 @@ using InventoryPro.Api.Common;
 using InventoryPro.Api.Configuration;
 using InventoryPro.Api.Extensions;
 using InventoryPro.Api.Middleware;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -112,6 +113,17 @@ builder.Services.AddCors(options =>
 // Built-in health checks. Useful for load balancers (AWS ALB) and Docker.
 builder.Services.AddHealthChecks();
 
+// Trust X-Forwarded-For / X-Forwarded-Proto headers from the reverse proxy in
+// front of us (Render, Vercel, AWS ALB, nginx). Without this the app believes
+// every request arrives over plain HTTP even though TLS was terminated upstream,
+// which causes HTTPS-redirect loops in production.
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 // Application services registered by our own extension method (Phase 2+).
 builder.Services.AddApplicationServices();
 
@@ -128,6 +140,10 @@ var app = builder.Build();
 // 2. HTTP REQUEST PIPELINE (middleware)
 // In Spring this is the Filter chain. Order matters: first registered runs first.
 // =====================================================================
+
+// Must be the first middleware: it rewrites Request.Scheme/RemoteIpAddress from
+// the proxy headers so later middleware (HTTPS redirection) behaves correctly.
+app.UseForwardedHeaders();
 
 // Catches every exception and converts it to the standard ApiResponse envelope.
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -148,7 +164,13 @@ if (app.Environment.IsDevelopment())
 }
 
 // Only force HTTPS outside development, so local http:// preview keeps working.
-if (!app.Environment.IsDevelopment())
+// Behind a proxy that already terminates TLS (Render/Vercel/ALB) this can be
+// disabled with Http__UseHttpsRedirection=false to avoid redirect loops.
+var useHttpsRedirection = app.Configuration.GetValue(
+    "Http:UseHttpsRedirection",
+    !app.Environment.IsDevelopment());
+
+if (useHttpsRedirection)
 {
     app.UseHttpsRedirection();
 }

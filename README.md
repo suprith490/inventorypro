@@ -343,6 +343,9 @@ origin is listed in `Cors:AllowedOrigins`.
 
 ## 12. AWS-ready deployment
 
+> For a step-by-step guide that deploys the frontend to Vercel and the API to
+> Render, see `DEPLOY_VERCEL_RENDER.md`.
+
 The project ships with a multi-stage `Dockerfile` and a `docker-compose.yml`.
 
 - The image listens on `http://+:8080` (ASP.NET Core 8 container convention).

@@ -1,0 +1,47 @@
+# =============================================================================
+# Render Blueprint for the InventoryPro API (backend).
+#
+# Render runs the ASP.NET Core app from the repository Dockerfile.
+#
+# Database: this blueprint uses the built-in SQLite fallback so you can deploy
+# without a separate database. NOTE: on Render's free plan the filesystem is
+# ephemeral, so the SQLite file is recreated (and re-seeded) when the service
+# restarts or redeploys. For durable data, attach a persistent disk (paid) or
+# switch to a managed SQL Server and set ConnectionStrings__DefaultConnection.
+#
+# Deploy: Render Dashboard -> New + -> Blueprint -> select this repository.
+# =============================================================================
+
+services:
+  - type: web
+    name: inventorypro-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      # Use the SQLite fallback so no external database is required.
+      - key: Database__Provider
+        value: Sqlite
+      - key: Database__ApplyMigrationsOnStartup
+        value: "true"
+      # TLS is terminated by Render's proxy, so the app must not redirect again.
+      - key: Http__UseHttpsRedirection
+        value: "false"
+      # Render generates a strong random secret for the JWT signing key.
+      - key: Jwt__Key
+        generateValue: true
+      - key: Jwt__Issuer
+        value: InventoryPro
+      - key: Jwt__Audience
+        value: InventoryProClient
+      - key: Jwt__ExpiryMinutes
+        value: "60"
+      # Allow the Vercel frontend origin to call the API directly (optional if
+      # you use the Vercel rewrite proxy). Update after your first Vercel deploy.
+      - key: Cors__AllowedOrigins__0
+        sync: false
