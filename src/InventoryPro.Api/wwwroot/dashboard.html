@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - InventoryPro</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar"></aside>
+      <div class="main">
+        <header class="topbar" id="topbar"></header>
+        <main class="content">
+          <div class="page-header">
+            <div>
+              <h2 id="welcomeTitle">Dashboard</h2>
+              <p id="dashboardSubtitle">Loading overview...</p>
+            </div>
+            <button class="btn secondary" id="refreshButton">Refresh</button>
+          </div>
+
+          <section class="grid cols-4" id="statCards"></section>
+
+          <section class="grid cols-2" style="margin-top:16px">
+            <div class="card">
+              <h3>Recent sales</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Number</th>
+                      <th>Customer</th>
+                      <th class="text-right">Qty</th>
+                      <th class="text-right">Amount</th>
+                      <th>When</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentSalesBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Recent purchases</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Number</th>
+                      <th>Supplier</th>
+                      <th class="text-right">Qty</th>
+                      <th class="text-right">Amount</th>
+                      <th>When</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentPurchasesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" style="margin-top:16px">
+            <div class="page-header" style="margin-bottom:10px">
+              <h3 style="margin:0">Low-stock alerts</h3>
+              <a class="btn secondary small" href="inventory.html">Open inventory</a>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>SKU</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th class="text-right">On hand</th>
+                    <th class="text-right">Reorder level</th>
+                    <th class="text-right">Suggested order</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="lowStockBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

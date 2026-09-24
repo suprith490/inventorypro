@@ -1,0 +1,26 @@
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+**/TestResults/
+
+# Local databases
+*.db
+*.db-shm
+*.db-wal
+
+# Local secrets / environment overrides
+.env
+*.user
+appsettings.*.local.json
+
+# IDE / editor
+.vs/
+.vscode/
+.idea/
+.git/
+.gitignore
+
+# Docs and tooling we do not need inside the image
+README.md
+docs/

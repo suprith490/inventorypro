@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports - InventoryPro</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar"></aside>
+      <div class="main">
+        <header class="topbar" id="topbar"></header>
+        <main class="content">
+          <div class="page-header">
+            <div>
+              <h2>Reports</h2>
+              <p>Sales, purchasing and inventory valuation summaries.</p>
+            </div>
+          </div>
+
+          <form class="filters" id="rangeForm">
+            <div class="field">
+              <label for="from">From</label>
+              <input id="from" type="date" />
+            </div>
+            <div class="field">
+              <label for="to">To</label>
+              <input id="to" type="date" />
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <button class="btn" type="submit">Apply range</button>
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <button class="btn secondary" type="button" id="clearRange">All time</button>
+            </div>
+          </form>
+
+          <section class="card" id="valuationSection" style="display:none;margin-bottom:16px">
+            <h3>Inventory valuation (Admin)</h3>
+            <div class="grid cols-4" id="valuationStats" style="margin-bottom:12px"></div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th class="text-right">Products</th>
+                    <th class="text-right">Units</th>
+                    <th class="text-right">Cost value</th>
+                    <th class="text-right">Retail value</th>
+                  </tr>
+                </thead>
+                <tbody id="valuationBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card" style="margin-bottom:16px">
+            <h3>Sales report</h3>
+            <div class="grid cols-4" id="salesStats" style="margin-bottom:12px"></div>
+            <div class="grid cols-2">
+              <div>
+                <h4>Daily breakdown</h4>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th class="text-right">Orders</th>
+                        <th class="text-right">Units</th>
+                        <th class="text-right">Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dailySalesBody"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div>
+                <h4>Top products</h4>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>SKU</th>
+                        <th>Product</th>
+                        <th class="text-right">Units</th>
+                        <th class="text-right">Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody id="topProductsBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h3>Purchase report</h3>
+            <div class="grid cols-4" id="purchaseStats" style="margin-bottom:12px"></div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Supplier</th>
+                    <th class="text-right">Orders</th>
+                    <th class="text-right">Units received</th>
+                    <th class="text-right">Total spend</th>
+                  </tr>
+                </thead>
+                <tbody id="supplierPurchaseBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/reports.js"></script>
+  </body>
+</html>

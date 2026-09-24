@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - InventoryPro</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="auth-page">
+      <div class="auth-card">
+        <h1>Inventory<span style="color:#2563eb">Pro</span></h1>
+        <p class="subtitle">Sign in to manage stock, purchases and sales.</p>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="btn" type="submit" id="loginButton">Sign in</button>
+        </form>
+
+        <div class="demo-creds">
+          <strong>Demo accounts</strong><br />
+          Admin: admin@inventorypro.local / Admin@123<br />
+          Staff: staff@inventorypro.local / Staff@123
+        </div>
+
+        <p class="hint">
+          No account? <a href="register.html">Create one</a>
+        </p>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InventoryPro</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="auth-page">
+      <div class="auth-card">
+        <h1>Inventory<span style="color:#2563eb">Pro</span></h1>
+        <p class="subtitle">Loading your workspace...</p>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script>
+      // Entry point: send authenticated users to the dashboard, everyone else to login.
+      const token = localStorage.getItem(window.CONFIG.TOKEN_KEY);
+      window.location.replace(token ? "dashboard.html" : "login.html");
+    </script>
+  </body>
+</html>

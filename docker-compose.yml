@@ -1,0 +1,51 @@
+# =============================================================================
+# InventoryPro - local production-like stack: SQL Server + the API image.
+#
+# Usage:
+#   cp .env.example .env     # then edit the secrets
+#   docker compose up --build
+#   open http://localhost:8080  (Swagger at /swagger)
+# =============================================================================
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: inventorypro-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inventorypro-api
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      Database__Provider: SqlServer
+      Database__ApplyMigrationsOnStartup: "true"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=InventoryProDb;User Id=sa;Password=${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd};TrustServerCertificate=True;MultipleActiveResultSets=true"
+      Jwt__Key: "${JWT_KEY:-please-change-this-to-a-random-32-plus-character-secret}"
+      Jwt__Issuer: InventoryPro
+      Jwt__Audience: InventoryProClient
+      Jwt__ExpiryMinutes: "60"
+    ports:
+      - "8080:8080"
+
+volumes:
+  mssql-data:

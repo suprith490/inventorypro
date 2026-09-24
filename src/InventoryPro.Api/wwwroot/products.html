@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - InventoryPro</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar"></aside>
+      <div class="main">
+        <header class="topbar" id="topbar"></header>
+        <main class="content">
+          <div class="page-header">
+            <div>
+              <h2>Products</h2>
+              <p>Search, filter and sort the catalog. Stock changes only through purchases, sales and adjustments.</p>
+            </div>
+            <button class="btn" id="addProductButton" style="display:none">+ New product</button>
+          </div>
+
+          <form class="filters" id="filterForm">
+            <div class="field">
+              <label for="search">Search</label>
+              <input id="search" type="search" placeholder="Name, SKU, description" />
+            </div>
+            <div class="field">
+              <label for="categoryFilter">Category</label>
+              <select id="categoryFilter"><option value="">All categories</option></select>
+            </div>
+            <div class="field">
+              <label for="supplierFilter">Supplier</label>
+              <select id="supplierFilter"><option value="">All suppliers</option></select>
+            </div>
+            <div class="field">
+              <label for="sortBy">Sort by</label>
+              <select id="sortBy">
+                <option value="name">Name</option>
+                <option value="sku">SKU</option>
+                <option value="price">Unit price</option>
+                <option value="stock">Stock</option>
+                <option value="created">Newest</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sortDir">Direction</label>
+              <select id="sortDir">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <label style="display:flex;align-items:center;gap:6px;font-weight:500">
+                <input type="checkbox" id="lowStockOnly" style="width:auto" /> Low stock only
+              </label>
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <button class="btn secondary" type="button" id="clearFilters">Clear</button>
+            </div>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Supplier</th>
+                  <th class="text-right">Unit price</th>
+                  <th class="text-right">Cost</th>
+                  <th class="text-right">Stock</th>
+                  <th>Status</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsBody"></tbody>
+            </table>
+          </div>
+          <div class="pagination" id="pagination"></div>
+        </main>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/products.js"></script>
+  </body>
+</html>

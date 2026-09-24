@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory - InventoryPro</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar"></aside>
+      <div class="main">
+        <header class="topbar" id="topbar"></header>
+        <main class="content">
+          <div class="page-header">
+            <div>
+              <h2>Inventory</h2>
+              <p>Every stock movement is recorded here. The ledger is append-only.</p>
+            </div>
+            <button class="btn" id="adjustButton">+ Manual adjustment</button>
+          </div>
+
+          <section class="card" style="margin-bottom:16px">
+            <h3>Low-stock alerts</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>SKU</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th class="text-right">On hand</th>
+                    <th class="text-right">Reorder level</th>
+                    <th class="text-right">Suggested order</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="lowStockBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <h3 style="margin:4px 0 10px">Transaction history</h3>
+          <form class="filters" id="filterForm">
+            <div class="field">
+              <label for="search">Search</label>
+              <input id="search" type="search" placeholder="Product, SKU or note" />
+            </div>
+            <div class="field">
+              <label for="transactionType">Type</label>
+              <select id="transactionType">
+                <option value="">All types</option>
+                <option value="StockIn">Stock In</option>
+                <option value="StockOut">Stock Out</option>
+                <option value="Adjustment">Adjustment</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="from">From</label>
+              <input id="from" type="date" />
+            </div>
+            <div class="field">
+              <label for="to">To</label>
+              <input id="to" type="date" />
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <button class="btn secondary" type="button" id="clearFilters">Clear</button>
+            </div>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>When</th>
+                  <th>Product</th>
+                  <th>Type</th>
+                  <th>Reference</th>
+                  <th class="text-right">Before</th>
+                  <th class="text-right">Change</th>
+                  <th class="text-right">After</th>
+                  <th>By</th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody id="transactionsBody"></tbody>
+            </table>
+          </div>
+          <div class="pagination" id="pagination"></div>
+        </main>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/inventory.js"></script>
+  </body>
+</html>
