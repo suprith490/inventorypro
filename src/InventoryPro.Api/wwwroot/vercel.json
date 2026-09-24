@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://REPLACE-WITH-YOUR-RENDER-SERVICE.onrender.com/api/:path*"
+      "destination": "https://inventorypro-api-04zf.onrender.com/api/:path*"
     },
     {
       "source": "/health",
-      "destination": "https://REPLACE-WITH-YOUR-RENDER-SERVICE.onrender.com/health"
+      "destination": "https://inventorypro-api-04zf.onrender.com/health"
     }
   ]
 }
